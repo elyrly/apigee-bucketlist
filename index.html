@@ -40,11 +40,16 @@
                 function(err, data) { // Success
                     if (err) {
                         alert("read failed");
+                        $('#bucketlist').html(localStorage.getItem('items')); //save the local machine
                     } else {
+                        $('#bucketlist').empty(); //or html(''); removes the previous list items
                         while(items.hasNextEntity()) {
                             var item = items.getNextEntity();
-                            alert(item.get("title")); // Output the title of the book
+                            //alert(item.get("title")); // Output the title of the book
+                            $('#bucketlist').append('<li><a href = "#page-add">' + item.get("title") + '</li></a>');
                         }
+                        $('#bucketlist').listview('refresh'); //make sure it refreshes to styling
+                        localStorage.setItem('items', $('#bucketlist').html()); //save in html5 api to save data locally
                     }
                 });
 
